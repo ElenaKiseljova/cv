@@ -17,7 +17,8 @@
 
 :root {
   /* Page */
-  --page-height: 210mm;
+  --page-width: 210mm;
+  --page-height: 297mm;
 
   /* Colors*/
   --cl-blue-700: #485b8f;
@@ -36,7 +37,7 @@
 /* Set content to fill the entire A4 page */
 html,
 body {
-  width: var(--page-height);
+  width: 100%;
 
   font-family: 'Raleway', sans-serif;
   font-optical-sizing: auto;
@@ -49,9 +50,11 @@ body {
 
   grid-template-columns: 1fr 2.5fr;
 
-  width: 100%;
+  width: var(--page-width);
 
-  min-height: 297mm;
+  min-height: var(--page-height);
+
+  margin: 0 auto;
 }
 
 .article__aside,
@@ -365,7 +368,7 @@ body {
         z-index: 1;
 
         width: 2px;
-        height: var(--page-height);
+        height: var(--page-width);
 
         background-color: var(--cl-black);
         transform: translateX(-50%);
