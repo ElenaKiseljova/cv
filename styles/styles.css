@@ -8,6 +8,10 @@
   margin: 0;
 
   font-family: inherit;
+
+  border: none;
+
+  text-decoration: none;
 }
 
 @page {
@@ -222,8 +226,6 @@ body {
 .detail__text {
   &:is(a) {
     color: inherit;
-
-    text-decoration: none;
 
     opacity: 1;
 
@@ -499,12 +501,44 @@ body {
 .section-block__certificate {
   color: var(--cl-blue-700);
 
-  text-decoration: none;
-
   transition: opacity var(--d-base) var(--ease-base);
 
   &:hover {
     opacity: 0.9;
+  }
+}
+
+/* Index page */
+.print {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100dvw;
+  height: 100dvh;
+}
+
+.print__button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 15px;
+
+  text-transform: uppercase;
+
+  color: var(--cl-white);
+
+  background-color: var(--cl-blue-700);
+
+  transition: background-color var(--d-base) var(--ease-base);
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--cl-blue-400);
   }
 }
 
