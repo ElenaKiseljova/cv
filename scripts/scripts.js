@@ -1,5 +1,5 @@
-// // Print celected HTML element
-// const printPdf = () => {
+// // 1. Print celected HTML element
+// const printPdf = (elementId) => {
 //   // newWindow object can only be created by window.open()
 //   // in an event listener.
 //   // If we call it elsewhere, null will be returned
@@ -20,7 +20,7 @@
 //   const body = document.createElement('body');
 
 //   // grab the elements that you want to convert to PDF
-//   const article = document.querySelector('#article').cloneNode(true);
+//   const article = document.querySelector(elementId).cloneNode(true);
 
 //   // you can append as many child as you like
 //   // this is where we add our elements to the new window.
@@ -43,31 +43,69 @@
 //   // newWindow.close();
 // };
 
-// document.addEventListener('DOMContentLoaded', () => {
-//   // Button for trigger Print action
-//   const buttonPrint = document.querySelector('#print');
+// 2. Print full HTML document from iframe
+// Set print handler
+const setPrintHandler = (evt) => {
+  // Title of the document
+  const defaultTitle = document.title;
 
-//   if (buttonPrint) {
-//     buttonPrint.addEventListener('click', async () => {
-//       printPdf();
-//     });
-//   }
-// });
+  const iframe = evt.currentTarget;
 
-function setPrint() {
-  const closePrint = () => {
-    document.body.removeChild(this);
-  };
-  this.contentWindow.onbeforeunload = closePrint;
-  this.contentWindow.onafterprint = closePrint;
-  this.contentWindow.print();
-}
+  if (iframe) {
+    const iframeWindow = evt.currentTarget?.contentWindow;
 
-document.getElementById('print').addEventListener('click', () => {
+    if (iframeWindow) {
+      // Close print handler
+      const closePrintHandler = () => {
+        // Change Title of the document from iframe to default
+        document.title = defaultTitle;
+
+        // Delete iframe from the DOM
+        document.body.removeChild(iframe);
+      };
+
+      // Change Title of the document from default to iframe
+      document.title = iframeWindow.document.title;
+
+      // Close print triggers
+      iframeWindow.addEventListener('beforeunload', closePrintHandler);
+      iframeWindow.addEventListener('afterprint', closePrintHandler);
+
+      // Print iframe
+      iframeWindow.print();
+    }
+  }
+};
+
+const printPDF = (url) => {
+  // Create iframe
   const hideFrame = document.createElement('iframe');
-  hideFrame.onload = setPrint;
-  hideFrame.style.display = 'none'; // hide iframe
-  hideFrame.src = 'cv.html';
+
+  // Load handler
+  hideFrame.addEventListener('load', setPrintHandler);
+
+  // Hide iframe
+  hideFrame.style.display = 'none';
+
+  // Set source for iframe
+  hideFrame.src = url;
+
+  // Add iframe to the DOM
   document.body.appendChild(hideFrame);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Button for trigger Print action
+  const buttonPrint = document.querySelector('#print');
+
+  if (buttonPrint) {
+    buttonPrint.addEventListener('click', () => {
+      // 1
+      // printPDF('#article');
+
+      // 2
+      printPDF('cv.html');
+    });
+  }
 });
 
