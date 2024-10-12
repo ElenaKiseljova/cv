@@ -515,6 +515,8 @@ body {
   align-items: center;
   justify-content: center;
 
+  column-gap: 40px;
+
   width: 100dvw;
   height: 100dvh;
 }
@@ -524,6 +526,10 @@ body {
 
   align-items: center;
   justify-content: center;
+
+  width: fit-content;
+
+  min-width: 20dvw;
 
   padding: 15px;
 
